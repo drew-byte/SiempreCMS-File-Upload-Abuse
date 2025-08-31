@@ -1,7 +1,7 @@
 # SiempreCMS-Path-Traversal
 
 ### Path Traversal in ``../media../``. This allows reading arbitrary files via directory traversal.
-*Source Code:* [SiempreCMS v1.6](https://github.com/SiempreCMS/SiempreCMS)
+*Source Code:* [SiempreCMS v1.3.6](https://github.com/SiempreCMS/SiempreCMS)
 
 ```php
 $requestedPath = strtolower(trim($_POST['path']));
