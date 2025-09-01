@@ -98,7 +98,7 @@ done
 ---
 
 ### Expected Outcome
--    Hundreds of files are uploaded to modules/helloworld/.
+-    Hundreds of files are uploaded to ``modules/helloworld/``.
 -    Disk usage in the directory increases significantly.
 -    Server performance may degrade due to the large number of files.
 -    Existing files in the directory can be overwritten if the same filename is used.
