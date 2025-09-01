@@ -1,7 +1,5 @@
 # Unauthenticated File Upload Allows Server Flooding – SiempreCMS
 
-## Vulnerability Overview
-
 - **Type:** Arbitrary File Upload / Resource Exhaustion  
 - **Location:** `docs/admin/file_upload.php`  
 - **Impact:** An attacker can upload files to arbitrary directories under `../media/`, including hidden module directories. While uploaded files cannot be executed as PHP scripts in this setup, the vulnerability allows **flooding a specific directory with large numbers of files**, potentially exhausting disk space, degrading server performance, or causing denial-of-service conditions.  
